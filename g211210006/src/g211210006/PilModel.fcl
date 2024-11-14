@@ -1,0 +1,50 @@
+FUNCTION_BLOCK PilModel
+
+VAR_INPUT
+	voltaj : REAL;
+	sicaklik : REAL;
+END_VAR
+
+VAR_OUTPUT
+	bataryaSeviyesi : REAL;
+END_VAR
+
+FUZZIFY voltaj
+    TERM dusuk := (0, 1) (3.0, 1) (3.5, 0);
+    TERM orta := (3.4, 0) (3.7, 1) (4.0, 1) (4.3, 0);
+    TERM yuksek := (4.2, 0) (4.5, 1);
+END_FUZZIFY
+
+FUZZIFY sicaklik
+    TERM serin := (0, 1) (10, 1) (20, 0);
+    TERM orta := (15, 0) (25, 1) (35, 0);
+    TERM sicak := (30, 0) (40, 1);
+END_FUZZIFY
+
+DEFUZZIFY bataryaSeviyesi
+    TERM empty := (0, 1) (1, 0);   // Empty durumunu çok daha baskın hale getirdik.
+    TERM low := (0, 0) (10, 1) (30, 0);
+    TERM medium := (25, 0) (50, 1) (75, 0);
+    TERM high := (70, 0) (90, 1);
+    TERM full := trape 90 95 100 100;
+    METHOD : COG;
+END_DEFUZZIFY
+
+RULEBLOCK kuralblok1
+    AND : MIN;
+    ACT : MIN;
+    ACCU : MAX;
+
+    RULE 1: IF voltaj IS dusuk AND sicaklik IS serin THEN bataryaSeviyesi IS medium;
+    RULE 2: IF voltaj IS orta AND sicaklik IS serin THEN bataryaSeviyesi IS high;
+    RULE 3: IF voltaj IS yuksek AND sicaklik IS serin THEN bataryaSeviyesi IS full;
+    RULE 4: IF voltaj IS dusuk AND sicaklik IS orta THEN bataryaSeviyesi IS low;
+    RULE 5: IF voltaj IS orta AND sicaklik IS orta THEN bataryaSeviyesi IS medium;
+    RULE 6: IF voltaj IS yuksek AND sicaklik IS orta THEN bataryaSeviyesi IS high;
+    RULE 7: IF voltaj IS dusuk AND sicaklik IS sicak THEN bataryaSeviyesi IS empty;
+    RULE 8: IF voltaj IS orta AND sicaklik IS sicak THEN bataryaSeviyesi IS low;
+    RULE 9: IF voltaj IS yuksek AND sicaklik IS sicak THEN bataryaSeviyesi IS medium;
+
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

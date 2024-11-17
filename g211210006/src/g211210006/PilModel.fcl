@@ -10,9 +10,9 @@ VAR_OUTPUT
 END_VAR
 
 FUZZIFY voltaj
-    TERM dusuk := (0, 1) (3.0, 1) (3.5, 0);
-    TERM orta := (3.4, 0) (3.7, 1) (4.0, 1) (4.3, 0);
-    TERM yuksek := (4.2, 0) (4.5, 1);
+    TERM dusuk := (10.5, 1) (11.75, 0);
+    TERM orta := (11.58, 0) (12.06, 1) (12.42, 0);
+    TERM yuksek := (12.32, 0) (12.6, 1);
 END_FUZZIFY
 
 FUZZIFY sicaklik
@@ -23,9 +23,9 @@ END_FUZZIFY
 
 DEFUZZIFY bataryaSeviyesi
     TERM empty := (0, 1) (1, 0);   // Empty durumunu çok daha baskın hale getirdik.
-    TERM low := (0, 0) (10, 1) (30, 0);
+    TERM low := (0, 0) (10, 1) (35, 0);
     TERM medium := (25, 0) (50, 1) (75, 0);
-    TERM high := (70, 0) (90, 1);
+    TERM high := (70, 0) (90, 1)(95,0);
     TERM full := trape 90 95 100 100;
     METHOD : COG;
 END_DEFUZZIFY

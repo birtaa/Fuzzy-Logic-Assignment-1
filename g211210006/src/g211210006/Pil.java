@@ -20,6 +20,10 @@ public class Pil {
 		fis.setVariable("sicaklik", sicaklik);
 		fis.evaluate();
 	}
+	
+	public FIS getModel() {
+		return fis;
+	}
 	@Override
 	public String toString() {
 	    return "Voltaj: " + this.voltaj + ", Sicaklik: " + this.sicaklik + "Pil yuzdesi: %" + fis.getVariable("bataryaSeviyesi").getValue();

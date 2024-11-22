@@ -1,4 +1,5 @@
 package g211210006;
+import java.util.Locale;
 
 import java.net.URISyntaxException;
 import java.util.Scanner;
@@ -9,6 +10,7 @@ public class Test {
 	public static void main(String[] args) throws URISyntaxException {
 		
 		Scanner in = new Scanner(System.in);
+        in.useLocale(Locale.US);
 
 		System.out.print("voltaj: ");
 		double voltaj = in.nextDouble();
@@ -17,6 +19,7 @@ public class Test {
 		Pil pil = new Pil(voltaj,sicaklik);
 		System.out.println(pil);
 		
+		JFuzzyChart.get().chart(pil.getModel().getVariable("bataryaSeviyesi").getDefuzzifier(),"Pil seviyesi",true);
 		JFuzzyChart.get().chart(pil.getModel());
 		for(Rule r: pil.getModel().getFunctionBlock("PilModel").getFuzzyRuleBlock("kuralblok1").getRules()) {
 			if(r.getDegreeOfSupport()>0)

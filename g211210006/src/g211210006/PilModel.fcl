@@ -22,7 +22,7 @@ FUZZIFY sicaklik
 END_FUZZIFY
 
 DEFUZZIFY bataryaSeviyesi
-    TERM empty := (0, 1) (1, 0);   // Empty durumunu çok daha baskın hale getirdik.
+    TERM empty := (0, 1) (1, 0);   
     TERM low := (0, 0) (10, 1) (35, 0);
     TERM medium := (25, 0) (50, 1) (75, 0);
     TERM high := (70, 0) (90, 1)(95,0);
